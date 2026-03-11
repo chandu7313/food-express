@@ -1,0 +1,31 @@
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://localhost:5001/api',
+});
+
+api.interceptors.request.use((config) => {
+    const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
+    if (userInfo && userInfo.token) {
+        config.headers.Authorization = `Bearer ${userInfo.token}`;
+    }
+    return config;
+});
+
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            
+            localStorage.removeItem('userInfo');
+            
+            if (window.location.pathname !== '/login') {
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default api;
