@@ -43,21 +43,27 @@ jobs:
                 restart: always
             EOF
 
-            if ! docker compose version >/dev/null 2>&1 && ! docker-compose version >/dev/null 2>&1; then
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "Docker not found. Installing docker.io..."
+              sudo apt-get update -y
+              sudo apt-get install -y docker.io
+            fi
+
+            if ! sudo docker compose version >/dev/null 2>&1 && ! sudo docker-compose version >/dev/null 2>&1; then
               echo "Docker compose missing. Installing automatically..."
               sudo apt-get update -y
               sudo apt-get install -y docker-compose-plugin docker-compose || true
             fi
             
-            if docker compose version >/dev/null 2>&1; then
-              docker compose pull
-              docker compose up -d
-            elif docker-compose version >/dev/null 2>&1; then
-              docker-compose pull
-              docker-compose up -d
+            if sudo docker compose version >/dev/null 2>&1; then
+              sudo docker compose pull
+              sudo docker compose up -d
+            elif sudo docker-compose version >/dev/null 2>&1; then
+              sudo docker-compose pull
+              sudo docker-compose up -d
             else
               echo "Error: Neither docker compose nor docker-compose could be run."
               exit 1
             fi
 
-            docker image prune -f
+            sudo docker image prune -f
