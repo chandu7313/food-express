@@ -12,13 +12,7 @@ A production-ready full-stack Food Delivery Application built with MongoDB, Expr
 ## 🛠️ Setup Instructions
 
 ### 1. Backend Setupmnas befnw\ef\wefaer
-ergwer
-g
-aerg
-wer
-sdjbgakbrfv
-g
-we
+
 1. Navigate to `backend` folder.
 2. Install dependencies: `npm install`.
 3. Create a `.env` file (see `.env.example`).
