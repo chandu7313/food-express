@@ -11,6 +11,7 @@ const app = express();
 
 app.use(cors({
   origin: [
+    "http://localhost:5174",
     "http://localhost:5173",
     "https://food-express-silk.vercel.app"
   ],
@@ -26,14 +27,14 @@ app.use('/api/cart', require('./routes/cartRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.get('/', (req, res) => {
-    res.send('API is running...');
+  res.send('API is running...');
 });
 
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

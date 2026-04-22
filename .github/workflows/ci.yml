@@ -25,7 +25,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: kavya00/food-express-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/food-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -34,6 +34,6 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: kavya00/food-express-frontend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/food-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
