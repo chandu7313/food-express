@@ -35,9 +35,7 @@ jobs:
               frontend:
                 image: kavya00/food-express-frontend:latest
                 ports:
-                  - "80:5173"
-                environment:
-                  - VITE_API_URL=http://${{ secrets.EC2_PUBLICIP }}:5000
+                  - "80:80"
                 depends_on:
                   - backend
                 restart: always
