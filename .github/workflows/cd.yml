@@ -23,24 +23,24 @@ jobs:
             cd ~/ci-cd-app
             
             cat <<EOF > docker-compose.yml
-            services:
-              backend:
-                image: kavya00/food-express-backend:latest
-                ports:
-                  - "5000:5000"
-                environment:
-                  - MONGODB_URI=mongodb+srv://kavyasrireddy28_db_user:admin123@cluster6.piqpnj0.mongodb.net/food_delivery?retryWrites=true&w=majority
-                  - PORT=5000
-                restart: always
+services:
+  backend:
+    image: kavya00/food-express-backend:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb+srv://kavyasrireddy28_db_user:admin123@cluster6.piqpnj0.mongodb.net/food_delivery?retryWrites=true&w=majority
+      - PORT=5000
+    restart: always
 
-              frontend:
-                image: kavya00/food-express-frontend:latest
-                ports:
-                  - "80:80"
-                depends_on:
-                  - backend
-                restart: always
-            EOF
+  frontend:
+    image: kavya00/food-express-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+EOF
 
             if ! docker compose version >/dev/null 2>&1 && ! docker-compose version >/dev/null 2>&1; then
               echo "Docker compose missing. Installing automatically..."
