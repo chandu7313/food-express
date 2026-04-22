@@ -1,0 +1,46 @@
+name: CD - Deploy to AWS
+
+on:
+  workflow_run:
+    workflows: ["CI - Build and Push"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to AWS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_PUBLICIP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            mkdir -p ~/ci-cd-app
+            cd ~/ci-cd-app
+            
+            cat <<EOF > docker-compose.yml
+            services:
+              backend:
+                image: kavya00/food-express-backend:latest
+                ports:
+                  - "5000:5000"
+                environment:
+                  - MONGODB_URI=mongodb+srv://Chandramohan4156:Gcm12316144@cluster0.9ujym.mongodb.net/ci-cd
+                  - PORT=5000
+                restart: always
+
+              frontend:
+                image: kavya00/food-express-frontend:latest
+                ports:
+                  - "80:80"
+                depends_on:
+                  - backend
+                restart: always
+            EOF
+
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
