@@ -28,7 +28,7 @@ jobs:
                 ports:
                   - "5000:5000"
                 environment:
-                  - MONGODB_URI=mongodb+srv://Chandramohan4156:Gcm12316144@cluster0.9ujym.mongodb.net/ci-cd
+                  - MONGODB_URI=mongodb+srv://kavyasrireddy28_db_user:admin123@cluster6.piqpnj0.mongodb.net/food_delivery?retryWrites=true&w=majority
                   - PORT=5000
                 restart: always
 
