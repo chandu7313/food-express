@@ -18,6 +18,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
+            set -e
             mkdir -p ~/ci-cd-app
             cd ~/ci-cd-app
             
@@ -41,6 +42,15 @@ jobs:
                 restart: always
             EOF
 
-            docker compose pull
-            docker compose up -d
+            if docker compose version >/dev/null 2>&1; then
+              docker compose pull
+              docker compose up -d
+            elif docker-compose version >/dev/null 2>&1; then
+              docker-compose pull
+              docker-compose up -d
+            else
+              echo "Error: Neither docker compose nor docker-compose is available on this EC2 instance."
+              exit 1
+            fi
+
             docker image prune -f
