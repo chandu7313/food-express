@@ -42,6 +42,12 @@ jobs:
                 restart: always
             EOF
 
+            if ! docker compose version >/dev/null 2>&1 && ! docker-compose version >/dev/null 2>&1; then
+              echo "Docker compose missing. Installing automatically..."
+              sudo apt-get update -y
+              sudo apt-get install -y docker-compose-plugin docker-compose || true
+            fi
+            
             if docker compose version >/dev/null 2>&1; then
               docker compose pull
               docker compose up -d
@@ -49,7 +55,7 @@ jobs:
               docker-compose pull
               docker-compose up -d
             else
-              echo "Error: Neither docker compose nor docker-compose is available on this EC2 instance."
+              echo "Error: Neither docker compose nor docker-compose could be run."
               exit 1
             fi
 
