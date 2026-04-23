@@ -18,8 +18,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
-            mkdir -p ~/ci-cd-app
-            cd ~/ci-cd-app
+            mkdir -p ~/food-express-app
+            cd ~/food-express-app
             
             # Create Nginx Config for Reverse Proxy
             cat <<EOF > nginx.conf
@@ -49,7 +49,7 @@ jobs:
               backend:
                 image: chandu9000/food-express-backend:latest
                 environment:
-                  - MONGODB_URI=mongodb+srv://Chandramohan4156:Gcm12316144@cluster0.9ujym.mongodb.net/ci-cd
+                  - MONGODB_URI=mongodb+srv://Chandramohan4156:Gcm12316144@cluster0.9ujym.mongodb.net/food-express
                   - PORT=4000
                 restart: always
 
