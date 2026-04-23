@@ -30,6 +30,13 @@ jobs:
                     root /usr/share/nginx/html;
                     index index.html;
                     try_files $uri $uri/ /index.html;
+                    
+                    # Prevent caching of index.html to ensure clients get the latest JS bundle
+                    location = /index.html {
+                        add_header Cache-Control "no-cache, no-store, must-revalidate";
+                        add_header Pragma "no-cache";
+                        add_header Expires "0";
+                    }
                 }
 
                 location /api/ {
