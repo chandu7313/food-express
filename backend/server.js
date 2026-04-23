@@ -9,14 +9,7 @@ connectDB();
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "http://localhost:5174",
-    "http://localhost:5173",
-    "https://food-express-silk.vercel.app"
-  ],
-  credentials: true
-}));
+app.use(cors());
 
 app.use(express.json());
 
